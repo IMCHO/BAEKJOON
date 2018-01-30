@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9fd4e224-bf5f-48d9-88c4-9c7aed8568a6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>1924.py</StartupFile>
+    <StartupFile>11721.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,6 +21,12 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="11720.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="11721.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="1924.py">
       <SubType>Code</SubType>
     </Compile>
@@ -45,6 +51,9 @@
     <Compile Include="2742.py">
       <SubType>Code</SubType>
       <Publish>True</Publish>
+    </Compile>
+    <Compile Include="8393.py">
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
