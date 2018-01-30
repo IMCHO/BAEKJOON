@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>9fd4e224-bf5f-48d9-88c4-9c7aed8568a6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>2739.py</StartupFile>
+    <StartupFile>1924.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,6 +21,21 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="1924.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="2438.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="2439.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="2440.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="2441.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="2739.py">
       <SubType>Code</SubType>
     </Compile>
