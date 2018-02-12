@@ -1,16 +1,12 @@
 num=input()
 temp=num
+temp2=0
 cycle=0
 while True:
-    if int(temp)<10:
-        temp=temp+temp
-    else:
-        if int(temp[0])+int(temp[1])<10:
-            temp=temp[1]+str(int(temp[0])+int(temp[1]))[0]
-            if(temp==num): break
-            else: cycle+=1
-        else: 
-            temp=temp[1]+str(int(temp[0])+int(temp[1]))[1]
-            if(temp==num): break
-            else: cycle+=1
-print(cycle+1)
+    for i in temp:
+        temp2+=int(i)
+    temp=temp[len(temp)-1]+str(temp2)[len(str(temp2))-1]
+    if temp==num:
+        cycle+=1;break
+    else: cycle+=1
+print(cycle)
