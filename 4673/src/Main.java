@@ -14,11 +14,8 @@ public class Main {
 		
 		//CheckSelf(arr.get(0));
 		
-		while(true) {
-			int count=0;
-			CheckSelf(arr.get(count));
-			count++;
-			if(count>=arr.size()) break;
+		for(int i=0;i<arr.size();i++) {
+			CheckSelf(arr.get(i));
 		}
 		
 		for(int i=0;i<arr.size();i++) {
