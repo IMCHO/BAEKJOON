@@ -1,16 +1,9 @@
 for _ in range(int(input())):
     x, y = (int(i) for i in input().split())
-    recordOfUse = [1]
-    x += recordOfUse[0]
-    while True:
-        if x > y:
-            x -= recordOfUse.pop()
-        elif x == y:
-            if recordOfUse[len(recordOfUse) - 1] == 1:
-                print(len(recordOfUse))
-                break
-            else:
-                x -= recordOfUse.pop()
-        move = recordOfUse[len(recordOfUse) - 1] + 1
-        x += move
-        recordOfUse.append(move)
+    y, x = y - x, 0
+    if y == 1:
+        print(1)
+    elif y == 2:
+        print(2)
+    else:
+        print(((y-1)//2)+2)
