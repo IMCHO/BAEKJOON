@@ -1,42 +1,33 @@
 for _ in range(int(input())):
     M, N, x, y = list(map(int, input().split()))
-    i = 1
-    maxY, minY = max(M, N), min(M, N)
+    bigNum, smlNum = max(M, N), min(M, N)
+    diff = bigNum - smlNum
+    arrOfMatch = [diff]
+    num = diff
     while True:
-        init = maxY * i - minY * i
-        if init < 0:
-            print(-1)
+        if num == smlNum:
             break
-        if maxY == M:
-            temp = M - x
-            init -= temp
-            if init <= 0:
-                init = N - init
-                if init == y:
-                    break
-                else:
-                    i += 1
-                    continue
+        num += diff
+        if num > smlNum:
+            num = num - smlNum
+        arrOfMatch.append(num)
+    if bigNum == M:
+        try:
+            if y + M - x > N:
+                temp = arrOfMatch.index(y + M - x - N)
             else:
-                if init == y:
-                    break
-                else:
-                    i += 1
-                    continue
+                temp = arrOfMatch.index(y + M - x)
+        except:
+            print(-1)
         else:
-            temp = N - y
-            init -= temp
-            if init <= 0:
-                init = M - init
-                if init == x:
-                    break
-                else:
-                    i += 1
-                    continue
+            print((temp + 1) * M - (M - x))
+    else:
+        try:
+            if x + N - y > M:
+                temp = arrOfMatch.index(x + N - y - M)
             else:
-                if init == x:
-                    break
-                else:
-                    i += 1
-                    continue
-    print(i * maxY - temp)
+                temp = arrOfMatch.index(x + N - y)
+        except:
+            print(-1)
+        else:
+            print((temp + 1) * N - (N - y))
