@@ -1,5 +1,3 @@
-# for i in sorted([int(input()) for _ in range(int(input()))]): print(i)
-
 arr = []
 for _ in range(int(input())): arr.append(int(input()))
 for i in range(1, len(arr)):
