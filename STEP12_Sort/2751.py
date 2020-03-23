@@ -23,7 +23,18 @@ def mergeSort(array):
         return temp
 
 
+def heapSort(array):
+
+def minHeapify(array):
+    length=len(array)
+    if length==1: return array
+    elif length==2:
+
+
+
+
 arr = []
 for _ in range(int(input())): arr.append(int(input()))
-for i in mergeSort(arr):
-    print(i)
+
+# for i in mergeSort(arr):
+#     print(i)
