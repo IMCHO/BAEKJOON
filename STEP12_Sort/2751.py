@@ -24,13 +24,33 @@ def mergeSort(array):
 
 
 def heapSort(array):
+    length = len(array)
+    for index in range(length // 2 - 1, -1, -1):
+        maxHeapify(array, index, length)
 
-def minHeapify(array):
-    length=len(array)
-    if length==1: return array
-    elif length==2:
+    for index in range(length - 1, 0, -1):
+        array[0], array[index] = array[index], array[0]
+        maxHeapify(array, 0, index)
+
+    return array
 
 
+def maxHeapify(array, parentIndex, heapSize):
+    doesChangeHappen = False
+    indexOfLargest = parentIndex
+    leftChildIndex = parentIndex * 2 + 1
+    rightChildIndex = parentIndex * 2 + 2
+
+    if leftChildIndex < heapSize and array[leftChildIndex] > array[indexOfLargest]:
+        indexOfLargest = leftChildIndex
+        doesChangeHappen = True
+    if rightChildIndex < heapSize and array[rightChildIndex] > array[indexOfLargest]:
+        indexOfLargest = rightChildIndex
+        doesChangeHappen = True
+
+    if doesChangeHappen:
+        array[indexOfLargest], array[parentIndex] = array[parentIndex], array[indexOfLargest]
+        maxHeapify(array, indexOfLargest, heapSize)
 
 
 arr = []
@@ -38,3 +58,6 @@ for _ in range(int(input())): arr.append(int(input()))
 
 # for i in mergeSort(arr):
 #     print(i)
+
+for i in heapSort(arr):
+    print(i)
