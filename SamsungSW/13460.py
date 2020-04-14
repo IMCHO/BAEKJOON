@@ -9,19 +9,23 @@
 
 
 def BFS(graph, start, end):
-    queue = [[start, [start]]]
-    result = []
+    queue = [[[start, "X"], [start, ], 0]]
+    result1 = []
+    result2 = []
     while queue:
         informationOfSpot = queue.pop(0)
-        if informationOfSpot[0] != end:
-            for index in graph[informationOfSpot[0]]:
-                if index not in informationOfSpot[1]:
+        if informationOfSpot[0][0] != end:
+            for index in graph[informationOfSpot[0][0]]:
+                if index[0] not in informationOfSpot[1]:
+                    if informationOfSpot[0][0] != index[1]: informationOfSpot[2] += 1
                     temp = informationOfSpot[1][:]
-                    temp.append(index)
-                    queue.append([index, temp])
-                if index == end:
-                    result.append(temp)
-    print(result)
+                    temp.append(index[0])
+                    queue.append([[index[0], index[1]], temp, informationOfSpot[2]])
+                if index[0] == end:
+                    result1.append(temp)
+                    result2.append(informationOfSpot[2]-1)
+    print(result1)
+    print(result2)
 
     # Add direction
 
@@ -31,21 +35,21 @@ graph = {}
 map = ""
 for _ in range(row):
     map += input()
-print(map)
+# print(map)
 for index, spot in enumerate(map):
     if spot == "#":
         continue
     if spot == "." or spot == "R" or spot == "B" or spot == "O":
         graph[index] = []
         if map[index + col] != "#":
-            graph[index].append(index + col)
+            graph[index].append([index + col, "N"])
         if map[index - col] != "#":
-            graph[index].append(index - col)
+            graph[index].append([index - col, "S"])
         if map[index + 1] != "#":
-            graph[index].append(index + 1)
+            graph[index].append([index + 1, "E"])
         if map[index - 1] != "#":
-            graph[index].append(index - 1)
-print(graph)
+            graph[index].append([index - 1, "W"])
+# print(graph)
 indexOfRed = map.index('R')
 indexOfBlue = map.index('B')
 indexOfDestination = map.index('O')
