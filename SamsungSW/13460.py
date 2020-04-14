@@ -31,20 +31,21 @@ graph = {}
 map = ""
 for _ in range(row):
     map += input()
+print(map)
 for index, spot in enumerate(map):
     if spot == "#":
         continue
     if spot == "." or spot == "R" or spot == "B" or spot == "O":
         graph[index] = []
-        if map[index + 5] != "#":
-            graph[index].append(index + 5)
-        if map[index - 5] != "#":
-            graph[index].append(index - 5)
+        if map[index + col] != "#":
+            graph[index].append(index + col)
+        if map[index - col] != "#":
+            graph[index].append(index - col)
         if map[index + 1] != "#":
             graph[index].append(index + 1)
         if map[index - 1] != "#":
             graph[index].append(index - 1)
-
+print(graph)
 indexOfRed = map.index('R')
 indexOfBlue = map.index('B')
 indexOfDestination = map.index('O')
