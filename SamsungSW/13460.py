@@ -17,13 +17,14 @@ def BFS(graph, start, end):
         if informationOfSpot[0][0] != end:
             for index in graph[informationOfSpot[0][0]]:
                 if index[0] not in informationOfSpot[1]:
-                    if informationOfSpot[0][0] != index[1]: informationOfSpot[2] += 1
+                    changeDirection = informationOfSpot[2]
+                    if informationOfSpot[0][1] != index[1]: changeDirection += 1
                     temp = informationOfSpot[1][:]
                     temp.append(index[0])
-                    queue.append([[index[0], index[1]], temp, informationOfSpot[2]])
+                    queue.append([[index[0], index[1]], temp, changeDirection])
                 if index[0] == end:
                     result1.append(temp)
-                    result2.append(informationOfSpot[2]-1)
+                    result2.append(changeDirection)
     print(result1)
     print(result2)
 
