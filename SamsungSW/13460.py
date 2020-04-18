@@ -8,7 +8,7 @@
 '''
 
 
-def BFS(graph, start, end):
+def BFS(graph, start, blue, end):
     queue = [[[start, "X"], [start, ], 0]]
     result1 = []
     result2 = []
@@ -28,7 +28,8 @@ def BFS(graph, start, end):
     print(result1)
     print(result2)
 
-    # Add direction
+    for index in range(len(result1)):
+        if result1[index]
 
 
 row, col = map(int, input().split())
@@ -54,4 +55,4 @@ for index, spot in enumerate(map):
 indexOfRed = map.index('R')
 indexOfBlue = map.index('B')
 indexOfDestination = map.index('O')
-BFS(graph, indexOfRed, indexOfDestination)
+BFS(graph, indexOfRed, indexOfBlue, indexOfDestination)
