@@ -17,6 +17,8 @@ function solution(baseball) {
                 let strike = 0;
                 let ball = 0;
 
+                if (expectedAns[0] === expectedAns[1] || expectedAns[1] === expectedAns[2] || expectedAns[0] === expectedAns[2] || expectedAns.indexOf('0') > 0) break;
+
                 for (let index = 0; index < expectedAns.length; index++) {
                     if (expectedAns[index] === hint[index]) strike++;
                     else {
@@ -24,19 +26,14 @@ function solution(baseball) {
                     }
                 }
 
-                if (strike === element[1] && ball === element[2]) {
-                }
-                else {
-                    num++;
-                    break;
-                }
+                if (strike !== element[1] || ball !== element[2]) break;
 
                 if (key == sortedBaseball.length - 1) {
-                    if (expectedAns[0] != expectedAns[1] && expectedAns[1] != expectedAns[2]) answer.push(num);
-                    num++;
+                    answer.push(num);
                 }
             }
         }
+        num++;
     }
 
     return answer.length;
