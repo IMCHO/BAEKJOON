@@ -10,43 +10,49 @@ from collections import deque
 
 
 def BFS(deque):
+    beenThereBefore = []
     while deque:
         position, cnt = deque.popleft()
+        beenThereBefore.append([position, cnt])
         for direction in [[1, 0], [0, 1], [-1, 0], [0, -1]]:
             dx, dy = direction
-            newCnt=cnt
-            newCnt+=1
+            newCnt = cnt
+            newCnt += 1
 
             if newCnt > 10:
                 continue
 
-            position[0], position[1], disForR = move(position[0], position[1], 0, direction)
-            position[2], position[3], disForB = move(position[2], position[3], 0, direction)
+            newXOfR, newYOfR, disForR = move(position[0], position[1], direction)
+            newXOfB, newYOfB, disForB = move(position[2], position[3], direction)
 
-            if map[position[0]][position[1]] == 'O':
-                if map[position[2]][position[3]] == 'O':
-                    print(-1)
-                    return
+            if map[newXOfR][newYOfR] == 'O':
+                if map[newXOfB][newYOfB] == 'O':
+                    continue
                 else:
                     print(newCnt)
                     return
+            elif map[newXOfB][newYOfB] == 'O':
+                continue
 
-            if position[0] == position[2] and position[1] == position[3]:
+            if newXOfR == newXOfB and newYOfR == newYOfB:
                 if disForR > disForB:
-                    position[2] -= dx
-                    position[3] -= dy
+                    newXOfR -= dx
+                    newYOfR -= dy
                 else:
-                    position[0] -= dx
-                    position[1] -= dy
+                    newXOfB -= dx
+                    newYOfB -= dy
 
-            result = [position, newCnt]
-            if result not in deque:
-                deque.append(result)
-            print(deque)
+            newPostion = [newXOfR, newYOfR, newXOfB, newYOfB]
+            result = [newPostion, newCnt]
+            for i, d in enumerate(beenThereBefore):
+                if d[0] == newPostion: break
+                if i == len(beenThereBefore) - 1:
+                    deque.append(result)
     print(-1)
 
 
-def move(xPos, yPos, distance, direction):
+def move(xPos, yPos, direction):
+    distance = 0
     while map[xPos][yPos] != '#':
         xPos += direction[0]
         yPos += direction[1]
@@ -54,12 +60,10 @@ def move(xPos, yPos, distance, direction):
 
         if map[xPos][yPos] == 'O':
             return xPos, yPos, distance
-        # print(xPos/, yPos)
 
-    if map[xPos][yPos] == '#':
-        xPos -= direction[0]
-        yPos -= direction[1]
-        distance -= 1
+    xPos -= direction[0]
+    yPos -= direction[1]
+    distance -= 1
 
     return xPos, yPos, distance
 
@@ -75,7 +79,6 @@ for index, line in enumerate(map):
         xR, yR = index, line.index('R')
     if 'B' in line:
         xB, yB = index, line.index('B')
-# print(xR,yR,xB,yB,xD,yD)
 
 dequeForBFS = deque([[[xR, yR, xB, yB], 0]])
 BFS(dequeForBFS)
