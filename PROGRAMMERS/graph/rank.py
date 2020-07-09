@@ -27,6 +27,18 @@ def solution(n, results):
     #         elif rankList[i][j] < 0 and rankList[j][i] == 0:
     #             rankList[j][i] = 1
 
+    # For not complete matrix
+    # like [[1,2],[2,3],[3,4],[5,6],[6,7],[7,8],[4,5]]
+    for i in range(n):
+        for j in range(n):
+            if i == j: continue
+            if rankList[i][j] == 1:
+                for h in range(n):
+                    if rankList[j][h] == 1: rankList[i][h] = 1
+            elif rankList[i][j] == -1:
+                for h in range(n):
+                    if rankList[j][h] == -1: rankList[i][h] = -1
+
     for list in rankList:
         if list.count(0) == 1: answer += 1
 
