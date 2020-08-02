@@ -5,43 +5,46 @@ from copy import deepcopy
 def solution(begin, target, words):
     if target not in words: return 0
 
-    wordMap = defaultdict(list)
+    wordMap = defaultdict(set)
 
     for word in words:
         makeMap(wordMap, begin, word)
 
     for word in words:
-        for target in words:
-            if word == target: continue
-            makeMap(wordMap, word, target)
+        for nextWord in words:
+            if word == nextWord: continue
+            makeMap(wordMap, word, nextWord)
 
     deq = deque([[begin, [begin]]])
 
-    result = []
+    # result = []
 
     while deq:
         info = deq.popleft()
 
-        for next in wordMap[info[0]]:
-            if next in info[1]: continue
-            if next == target:
-                # return len(info[1])
-                result.append(len(info[1]))
-                continue
+        for nextWord in wordMap[info[0]]:
+            # print(nextWord)
+            # print(target)
+            if nextWord in info[1]: continue
+            if nextWord == target:
+                return len(info[1])
+                # result.append(len(info[1]))
+                # continue
 
             newRoute = deepcopy(info[1])
-            newRoute.append(next)
-            newInfo = [next, newRoute]
+            newRoute.append(nextWord)
+            newInfo = [nextWord, newRoute]
             deq.append(newInfo)
 
-            # print("now : " + next)
+            # print("now : " + nextWord)
             # print("before : " + ' '.join(newRoute))
 
-    return min(result) if len(result) != 0 else 0
+    # return min(result) if len(result) != 0 else 0
+    return 0
 
 
 def makeMap(wordMap, index, word):
     cnt = 0
-    for c in index:
-        if c in word: cnt += 1
-    if cnt == len(word) - 1: wordMap[index].append(word)
+    for c1, c2 in zip(index, word):
+        if c1 == c2: cnt += 1
+    if cnt == len(word) - 1: wordMap[index].add(word)
