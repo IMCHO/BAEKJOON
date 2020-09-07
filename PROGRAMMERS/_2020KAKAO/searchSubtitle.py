@@ -6,14 +6,11 @@ def solution(words, queries):
 
     for query in queries:
         cntOfQMark = query.count("?")
-        pattern = ""
         if query.startswith("?"):
-            pattern = "[a-z]" + "{" + str(cntOfQMark) + "}" + query[query.rfind("?") + 1:] + " "
+            pattern = "[a-z]" + "{" + str(cntOfQMark) + "}" + query[query.rfind("?") + 1:]
         else:
-            pattern = query[0:query.find("?")] + "[a-z]" + "{" + str(cntOfQMark) + "} "
-        # print(pattern)
+            pattern = query[0:query.find("?")] + "[a-z]" + "{" + str(cntOfQMark) + "}"
         regex = re.compile(pattern)
-        result = regex.findall(" ".join(words) + " ")
-        # print(result)
+        result = regex.findall(" ".join(filter(lambda x: len(x) == len(query), words)))
         answer.append(len(set(result)))
     return answer
