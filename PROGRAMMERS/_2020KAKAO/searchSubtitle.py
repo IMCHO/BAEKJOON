@@ -1,32 +1,31 @@
-import re
+from collections import defaultdict
 
 
 def solution(words, queries):
-    # answer = []
-    # d = {}
-    # for query in queries:
-    #     if query not in d.keys():
-    #         cntOfQMark = query.count("?")
-    #         if query.startswith("?"):
-    #             pattern = "[a-z]" + "{" + str(cntOfQMark) + "}" + query[query.rfind("?") + 1:]
-    #         else:
-    #             pattern = query[0:query.find("?")] + "[a-z]" + "{" + str(cntOfQMark) + "}"
-    #         regex = re.compile(pattern)
-    #         result = regex.findall(" ".join(filter(lambda x: len(x) == len(query), words)))
-    #         d[query] = len(set(result))
-    #
-    #     answer.append(d[query])
-    # return answer
+    answer = []
+    dictForQuery = dict()
     trie = Trie()
+    trieForReverse = Trie()
+
     for word in words:
         trie.addWord(word)
-    print(trie)
+        trieForReverse.addWord(word[::-1])
+
+    for query in queries:
+        if query not in dictForQuery.keys():
+            if query.startswith("?"):
+                dictForQuery[query] = trieForReverse.searchWord(query[::-1].split("?")[0], len(query))
+            else:
+                dictForQuery[query] = trie.searchWord(query.split("?")[0], len(query))
+
+        answer.append(dictForQuery[query])
+    return answer
 
 
 class Node:
     def __init__(self):
-        self.value = ""
         self.next = dict()
+        self.length = defaultdict(int)
 
 
 class Trie:
@@ -35,15 +34,22 @@ class Trie:
         self.cur = self.head
 
     def addWord(self, word):
+        self.cur = self.head
+
+        self.head.length[len(word)] += 1
         for c in word:
             if c not in self.cur.next.keys():
                 newNode = Node()
-                newNode.value = c
                 self.cur.next[c] = newNode
             self.cur = self.cur.next[c]
+            self.cur.length[len(word)] += 1
 
+    def searchWord(self, word, lenOfQ):
         self.cur = self.head
 
-    def searchWord(self, word):
         for c in word:
-            if c == "?":
+            if c in self.cur.next.keys():
+                self.cur = self.cur.next[c]
+            else:
+                return 0
+        return self.cur.length[lenOfQ]
