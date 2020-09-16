@@ -9,52 +9,15 @@
 import Foundation
 
 func solution(_ numbers:String) -> Int {
-    var info: [Int:Array<Int>] = [:]
-    
-    for cnt in 1...numbers.count {
-        info[cnt] = []
-    }
-    
-    for cnt in 1...numbers.count {
-        var copiedCnt = cnt
-        while info[copiedCnt]?.count != numbers.count.makeCombination(with: copiedCnt) {
-            var index: [Int] = []
-            while index.count != copiedCnt {
-                let randomIndex = Int.random(in: 0..<numbers.count)
-                if !index.contains(randomIndex) {
-                    index.append(randomIndex)
-                }
-            }
-            var number: String = index.map({String(numbers[numbers.index(numbers.startIndex, offsetBy: $0)])}).reduce("", {$0 + $1})
-            while true {
-                if number[number.startIndex] == "0" {
-                    number.removeFirst()
-                    copiedCnt -= 1
-                } else {
-                    break
-                }
-            }
-            if number == "" {
-                continue
-            }
-            if !(info[copiedCnt]?.contains(Int(number)!))! {
-                info[copiedCnt]?.append(Int(number)!)
-            }
-        }
-    }
-    
-    print(info[1])
-    
     var result = 0
     
-    for (_, value) in info {
-        for num in value {
-            if num.checkPrime() {
-                result += 1
-            }
+    let numArr = Set(numbers.makePermutation())
+    
+    for num in numArr {
+        if num.checkPrime() {
+            result += 1
         }
     }
-    
     return result
 }
 
@@ -75,24 +38,74 @@ extension Int {
         }
         return true
     }
-    
-    func makeCombination(with count: Int) -> Int {
-        let upper: Int = {
-            var result = 1
-            for n in stride(from: self, through: self - count + 1, by: -1) {
-                result *= n
-            }
-            return result
-        }()
+}
+
+extension String {
+    func makePermutation() -> [Int] {
+        var info: [String:Int] = [:]
+        var result: [String] = []
         
-        let lower: Int = {
-            var result = 1
-            for n in stride(from: self, through: 1, by: -1) {
-                result *= n
+        for c in self {
+            result.append(String(c))
+            if let _ = info[String(c)] {
+                info[String(c)]! += 1
+            } else {
+                info[String(c)] = 1
             }
-            return result
-        }()
+        }
         
-        return upper / lower
+        var initial = result
+        for _ in 0..<Int(self)! {
+            var temp = Set<String>()
+            for num in initial {
+                for c in self {
+                    for index in 0..<num.count {
+                        var copiedNum = num
+                        copiedNum.insert(c, at: copiedNum.index(copiedNum.startIndex, offsetBy: index))
+                        
+                        var infoForCmp: [String:Int] = [:]
+                        for c in copiedNum {
+                            if let _ = infoForCmp[String(c)] {
+                                infoForCmp[String(c)]! += 1
+                            } else {
+                                infoForCmp[String(c)] = 1
+                            }
+                        }
+                        
+                        for (index, c) in copiedNum.enumerated() {
+                            if info[String(c)]! < infoForCmp[String(c)]! {
+                                break
+                            }
+                            if index == copiedNum.count - 1 {
+                                temp.insert(copiedNum)
+                            }
+                        }
+                    }
+                    let lastOne = num + String(c)
+
+                    var infoForCmp: [String:Int] = [:]
+                    for c in lastOne {
+                        if let _ = infoForCmp[String(c)] {
+                            infoForCmp[String(c)]! += 1
+                        } else {
+                            infoForCmp[String(c)] = 1
+                        }
+                    }
+
+                    for (index, c) in lastOne.enumerated() {
+                        if info[String(c)]! < infoForCmp[String(c)]! {
+                            break
+                        }
+                        if index == lastOne.count - 1 {
+                            temp.insert(lastOne)
+                        }
+                    }
+                }
+            }
+            initial = Array(temp)
+            result += Array(temp)
+        }
+        
+        return result.map { Int($0)!}
     }
 }
