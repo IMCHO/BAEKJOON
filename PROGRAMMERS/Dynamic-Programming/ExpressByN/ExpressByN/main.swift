@@ -53,8 +53,8 @@ func work(_ arr: [Set<Int>], _ N: Int, _ number: Int) -> Int {
 }
 
 
-
-print(solution(5, 12))
-print(solution(5, 31168))
-print(solution(2, 11))
+//
+//print(solution(5, 12))
+//print(solution(5, 31168))
+//print(solution(2, 11))
 
