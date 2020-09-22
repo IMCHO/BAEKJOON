@@ -8,64 +8,53 @@
 import Foundation
 
 func solution(_ N:Int, _ number:Int) -> Int {
-    var initial = [Int]()
-    var BFS = [Array<Int>]()
-    
-    for cnt in 1...7 {
-        let temp = Int(String(repeating: String(N), count: cnt))!
-        initial.append(temp)
-        BFS.append([temp, String(temp).count])
+    if N == number {
+        return 1
     }
-    var minimun = 9
-    while BFS.count != 0 {
-        let target = BFS.removeFirst()
-        
-        for offset in initial {
-            let cnt = String(offset).count + target[1]
-            let newValue1 = target[0] + offset
-            let newValue2 = target[0] - offset
-            let newValue22 = offset - target[0]
-            let newValue3 = target[0] / offset
-            var newValue33: Int?
-            if target[0] != 0 {
-                newValue33 = offset / target[0]
-            }
-            let newValue4 = target[0] * offset
-            
-            if cnt > 8 {
-                continue
-            }
+    
+    var set = Set<Int>()
+    set.insert(N)
 
-            if newValue1 == number || newValue2 == number || newValue22 == number || newValue3 == number || newValue4 == number {
-                minimun = min(minimun, cnt)
-            }
-            
-            if let value = newValue33 {
-                if value == number {
-                    minimun = min(minimun, cnt)
-                } else {
-                    BFS.append([value, cnt])
+    return work([set], N, number)
+}
+
+func work(_ arr: [Set<Int>], _ N: Int, _ number: Int) -> Int {
+    var copiedArr = arr
+    
+    if copiedArr.count > 8 {
+        return -1
+    }
+    
+    guard let lastOne = copiedArr.last else {
+        return -1
+    }
+    
+    if lastOne.contains(number) {
+        return copiedArr.count
+    }
+    
+    var newSet = Set<Int>()
+    for index1 in 0..<copiedArr.count {
+        for num1 in copiedArr[index1] {
+            for num2 in copiedArr[copiedArr.count - index1 - 1] {
+                newSet.insert(num1 + num2)
+                newSet.insert(num1 - num2)
+                if num2 != 0 {
+                    newSet.insert(num1 / num2)
                 }
-            }
-            
-            if newValue1 != number {
-                BFS.append([newValue1, cnt])
-            }
-            if newValue2 != number {
-                BFS.append([newValue2, cnt])
-            }
-//            if newValue22 != number {
-//                BFS.append([newValue22, cnt])
-//            }
-            if newValue3 != number {
-                BFS.append([newValue3, cnt])
-            }
-            if newValue4 != number {
-                BFS.append([newValue4, cnt])
+                newSet.insert(num1 * num2)
             }
         }
     }
-    return minimun >= 9 ? -1 : minimun
+    newSet.insert(Int(String(repeating: String(N), count: copiedArr.count + 1))!)
+    copiedArr.append(newSet)
+    
+    return work(copiedArr, N, number)
 }
 
+
+
 print(solution(5, 12))
+print(solution(5, 31168))
+print(solution(2, 11))
+
