@@ -7,8 +7,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1508BC13-ABDA-4B0A-9C25-D11B55D4790E"
-            shouldBeEnabled = "Yes"
+            uuid = "111F3525-E198-49CD-BBF8-58ECBBB76C65"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Immigration/main.swift"

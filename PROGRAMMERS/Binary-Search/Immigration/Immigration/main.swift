@@ -8,19 +8,23 @@
 import Foundation
 
 func solution(_ n:Int, _ times:[Int]) -> Int64 {
-    var copiedTimes = times.map({ [Int64($0), Int64($0)] })
-    var cnt = 0
-    var minimum = [Int64]()
+    var minimum: Int64 = 1
+    var worst: Int64 = times.map({Int64($0)}).sorted().last! * Int64(n)
+    var result = [Int64]()
     
-    while cnt != n {
-        copiedTimes.sort(by: { $0[0] < $1[0] })
-        minimum = copiedTimes.removeFirst()
-        cnt += 1
-        copiedTimes.insert([minimum[0] + minimum[1], minimum[1]], at: 0)
+    while minimum <= worst {
+        let mid = (worst + minimum) / 2
+        let numberOfPerson = times.map({ mid / Int64($0) }).reduce(0, { $0 + $1 })
+        if numberOfPerson >= n {
+            worst = mid - 1
+            result.append(mid)
+        } else {
+            minimum = mid + 1
+        }
     }
     
-    return minimum[0]
+    return result.sorted().first!
 }
 
-print(solution(6, [7,10]))
+//print(solution(6, [7,10]))
 
