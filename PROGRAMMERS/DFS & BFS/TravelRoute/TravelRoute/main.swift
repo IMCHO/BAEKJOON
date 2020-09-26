@@ -9,7 +9,6 @@ import Foundation
 
 func solution(_ tickets:[[String]]) -> [String] {
     var infos = [String:[String]]()
-    var copiedTickets = tickets
     
     for ticket in tickets {
         if var info = infos[ticket[0]] {
@@ -21,16 +20,27 @@ func solution(_ tickets:[[String]]) -> [String] {
         }
     }
     
-    var stack = [["ICN":["ICN"]]]
+    var stack = ["ICN"]
+    var result = [String]()
 
     
-    while true {
-        let start = stack.removeLast()
+    while stack.count != 0 {
+        guard let now = stack.last else {
+            return []
+        }
         
+        if !infos.keys.contains(now) || infos[now]?.count == 0 {
+            result.append(stack.removeLast())
+        } else {
+            guard let next = infos[now]?.removeFirst() else {
+                return []
+            }
+            stack.append(next)
+        }
     }
     
-    return []
+    return result.reversed()
 }
 
-let test = [["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]]
-print(solution(test))
+//let test = [["ICN", "SFO"], ["ICN", "ATL"], ["SFO", "ATL"], ["ATL", "ICN"], ["ATL", "SFO"]]
+//print(solution(test))
