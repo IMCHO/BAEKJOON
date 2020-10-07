@@ -47,14 +47,25 @@ def solution(lines):
     #     maximum2 = max(temp1, temp2, maximum2)
 
     maximum = 0
-    startTime = sorted(infos, key=lambda x: x[0])[0][0]
-    for start in range(startTime if startTime >= 0 else 0, infos[len(infos) - 1][1] + 1):
-        end = start + 999
-        temp = 0
-        for info in infos:
-            if start <= info[0] <= end or start <= info[1] <= end:
-                temp += 1
-        maximum = max(maximum, temp)
+    # startTime = sorted(infos, key=lambda x: x[0])[0][0]
+    # for start in range(startTime if startTime >= 0 else 0, infos[len(infos) - 1][1] + 1):
+    #     end = start + 999
+    #     temp = 0
+    #     for info in infos:
+    #         if start <= info[0] <= end or start <= info[1] <= end:
+    #             temp += 1
+    #     maximum = max(maximum, temp)
+
+    for info in infos:
+        startTime, endTime = info
+        startTime = 0 if startTime < 0 else startTime - 999
+        for time in range(startTime, endTime + 1):
+            temp = 1
+            for target in infos:
+                if info == target: continue
+                if time <= target[0] <= time + 999 or time <= target[1] <= time + 999:
+                    temp += 1
+            maximum = max(maximum, temp)
 
     return maximum
 
