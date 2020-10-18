@@ -16,9 +16,8 @@ func solution(_ s:String) -> Int {
         let lenOfBack = s[s.index(s.startIndex, offsetBy: index + 1)...].count
 //        print(lenOfFront,lenOfBack)
         let targetLen = min(lenOfFront, lenOfBack)
-        if targetLen == 0 { continue }
-        
-        for n in stride(from: targetLen, through: 1, by: -1) {
+
+        for n in stride(from: targetLen, through: 0, by: -1) {
             let original = s[s.index(s.startIndex, offsetBy: index - n)...s.index(s.startIndex, offsetBy: index + n)]
 //            print(original)
             if original == String(original.reversed()) {
