@@ -17,6 +17,7 @@ heapq.heapify(queue)
 
 while queue:
     now = heapq.heappop(queue)
+    if now[0] > costList[now[1] - 1]: continue
     for nextOne in infos[now[1]]:
         cost, nextV = nextOne
         newValue = now[0] + cost
